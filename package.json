@@ -1,0 +1,31 @@
+{
+    "name": "@onurege3467/djs-suite",
+    "version": "1.0.0",
+    "description": "A comprehensive and customizable suite of tools and utilities for discord.js v14 bots (Command Handling, Interactions, Embeds, Utils, Logging).",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no tests specified yet\" && exit 1"
+    },
+    "keywords": [
+        "discord",
+        "discord.js",
+        "bot",
+        "framework",
+        "handler",
+        "command",
+        "interaction",
+        "embed",
+        "utils",
+        "logger",
+        "suite",
+        "toolkit"
+    ],
+    "author": "Onur Ege",
+    "license": "MIT",
+    "dependencies": {
+        "@onurege3467/easycolor": "^1.1.0"
+    },
+    "engines": {
+        "node": ">=16.9.0"
+    }
+}
