@@ -383,3 +383,29 @@ logger.error('Failed to connect to database:', errorObject);
     Modular Imports: Only use the parts of the suite you actually need.
 
     Logging: Configure log level and output (potentially extend transports).
+
+## Pagination Support
+const { PaginateContent,CreatePagination } = require('@onurege3467/djs-suite');
+```js
+    const pages = [
+      new EmbedBuilder().setTitle('1').setDescription('1. page'),
+      new EmbedBuilder().setTitle('2').setDescription('2. Page'),
+      new EmbedBuilder().setTitle('3').setDescription('3. Page')
+    ];
+
+    await CreatePagination(interaction, pages, 120);
+```
+```js
+async execute(interaction) {
+    const içerikler = [
+      'Sample 1', 'Sample 2', 'Sample 3', 'Sample 4', 'Sample 5',
+      'Sample 6', 'Sample 7', 'Sample 8', 'Sample 9', 'Sample 10'
+    ];
+
+    await paginateContent(interaction, içerikler, {
+      title: 'Some Title',
+      itemsPerPage: 3,
+      timeout: 90
+    });
+  }
+```

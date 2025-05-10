@@ -1,6 +1,6 @@
 {
     "name": "@onurege3467/djs-suite",
-    "version": "1.0.0",
+    "version": "1.5.0",
     "description": "A comprehensive and customizable suite of tools and utilities for discord.js v14 bots (Command Handling, Interactions, Embeds, Utils, Logging).",
     "main": "index.js",
     "scripts": {

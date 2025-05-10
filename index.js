@@ -9,4 +9,6 @@ module.exports = {
     PermissionUtils: require('./src/PermissionUtils'),
     CommonUtils: require('./src/CommonUtils'),
     Logger: require('./src/Logger'),
+    PaginateContent: require('./src/PaginateContent'),
+    CreatePagination: require('./src/CreatePagination'),
 };
