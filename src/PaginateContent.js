@@ -3,29 +3,33 @@ const { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('
 /**
  * Uzun içeriği otomatik olarak sayfalara böler ve Discord'da sayfa sistemini gösterir.
  * @param {Interaction|Message} interaction - Komut interaction'ı
- * @param {string[]} items - Liste halinde içerikler (her satır bir içerik)
- * @param {Object} options - Ek ayarlar
+ * @param {string[]} items - Liste halinde içerikler
+ * @param {Object} options - Ayarlar
  * @param {string} [options.title] - Embed başlığı
  * @param {number} [options.itemsPerPage=5] - Her sayfada kaç içerik gösterilsin
  * @param {number} [options.timeout=60] - Süre (sn) sonunda düğmeler pasifleşsin
+ * @param {boolean} [options.defer=false] - Eğer interaction.deferReply() yapıldıysa true olmalı
  */
 async function paginateContent(interaction, items, options = {}) {
     const {
-        title = 'Sample Pagination',
+        title = 'Sayfalı Liste',
         itemsPerPage = 5,
-        timeout = 60
+        timeout = 60,
+        defer = false
     } = options;
 
     if (!Array.isArray(items) || items.length === 0)
         throw new Error('Gösterilecek içerik listesi boş veya geçersiz.');
 
+    if(interaction.deferred) options.defer = true;
+    
     const pages = [];
     for (let i = 0; i < items.length; i += itemsPerPage) {
         const chunk = items.slice(i, i + itemsPerPage);
         const embed = new EmbedBuilder()
             .setTitle(title)
             .setDescription(chunk.join('\n'))
-            .setFooter({ text: `${Math.floor(i / itemsPerPage) + 1}/${Math.ceil(items.length / itemsPerPage)}` });
+            .setFooter({ text: `Sayfa ${Math.floor(i / itemsPerPage) + 1}/${Math.ceil(items.length / itemsPerPage)}` });
         pages.push(embed);
     }
 
@@ -44,12 +48,15 @@ async function paginateContent(interaction, items, options = {}) {
             .setDisabled(currentPage === pages.length - 1)
     );
 
-    const message = await interaction.reply({
+    const replyOptions = {
         embeds: [pages[currentPage]],
         components: [getButtons()],
-        fetchReply: true,
-        ephemeral: false
-    });
+        fetchReply: true
+    };
+
+    const message = defer
+        ? await interaction.editReply(replyOptions)
+        : await interaction.reply(replyOptions);
 
     const collector = message.createMessageComponentCollector({
         filter: i => i.user.id === interaction.user.id,
